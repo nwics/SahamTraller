@@ -4,12 +4,155 @@
 
 <head>
     <title>Web Saham</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #2575fc;
+            margin: 0;
+        }
+
+        .add-stock-button {
+            padding: 10px 20px;
+            font-size: 14px;
+            background-color: #2575fc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .add-stock-button:hover {
+            background-color: #1a5bbf;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .table th,
+        .table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .table th {
+            background-color: #f7f7f7;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .table tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .stock-symbol {
+            font-weight: bold;
+            color: #2575fc;
+        }
+
+        .positive {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .negative {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
 </head>
 
 <body>
     <div layout:fragment="content">
-        <h1>Halaman Wathclist</h1>
+        <!-- <h1>Halaman Wathclist</h1> -->
+        <div class="container">
+            <div class="header">
+                <h1>Watch List Saham</h1>
+                <button class="add-stock-button">+ Tambah Saham</button>
+            </div>
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Simbol</th>
+                        <th>Nama Saham</th>
+                        <th>Harga Terakhir</th>
+                        <th>Perubahan</th>
+                        <th>Persentase</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="stock-symbol">AAPL</td>
+                        <td>Apple Inc.</td>
+                        <td>$145.30</td>
+                        <td class="positive">+1.25</td>
+                        <td class="positive">+0.87%</td>
+                    </tr>
+                    <tr>
+                        <td class="stock-symbol">TSLA</td>
+                        <td>Tesla Inc.</td>
+                        <td>$670.50</td>
+                        <td class="negative">-5.40</td>
+                        <td class="negative">-0.80%</td>
+                    </tr>
+                    <tr>
+                        <td class="stock-symbol">GOOGL</td>
+                        <td>Alphabet Inc.</td>
+                        <td>$2,950.00</td>
+                        <td class="positive">+12.00</td>
+                        <td class="positive">+0.41%</td>
+                    </tr>
+                    <tr>
+                        <td class="stock-symbol">AMZN</td>
+                        <td>Amazon.com Inc.</td>
+                        <td>$3,450.00</td>
+                        <td class="negative">-8.00</td>
+                        <td class="negative">-0.23%</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="footer">
+                &copy; 2025 Market Watch. Semua hak dilindungi.
+            </div>
+        </div>
     </div>
 </body>
 

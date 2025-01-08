@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Form Registrasi</title>
     <style>
         body {
             display: flex;
@@ -12,39 +12,29 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            background: linear-gradient(to bottom, #4A90E2, #50E3C2);
-            font-family: 'Arial', sans-serif;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #6a11cb, #2575fc);
         }
 
-        .login-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            padding: 20px;
-        }
-
-        .login-box {
+        .register-container {
             background: #fff;
             padding: 30px;
             border-radius: 15px;
             box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            width: 400px;
-            height: 400px;
-            /* width: 100%; */
+            max-width: 400px;
+            width: 100%;
         }
 
-        .login-title {
+        .register-title {
+            text-align: center;
             font-size: 24px;
             font-weight: bold;
             margin-bottom: 20px;
-            color: #4A90E2;
+            color: #2575fc;
         }
 
         .form-group {
-            margin-bottom: 20px;
-            text-align: left;
+            margin-bottom: 15px;
         }
 
         label {
@@ -65,37 +55,14 @@
         }
 
         input:focus {
-            border-color: #4A90E2;
-            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+            border-color: #2575fc;
+            box-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
             outline: none;
         }
 
-        .password-container {
-            display: flex;
-            align-items: center;
-            position: relative;
-        }
-
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 18px;
-            cursor: pointer;
-            color: #333;
-        }
-
-        .error-message {
-            font-size: 12px;
-            color: red;
-            margin-top: 5px;
-            display: block;
-        }
-
-        .login-button {
+        .register-button {
             width: 100%;
-            background: #4A90E2;
+            background: #2575fc;
             color: #fff;
             border: none;
             padding: 12px;
@@ -104,61 +71,57 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background 0.3s ease;
-            margin-top: 30px;
         }
 
-        .login-button:hover {
-            background: #357ABD;
+        .register-button:hover {
+            background: #1a5bbf;
         }
 
-        .login-footer {
+        .login-link {
+            text-align: center;
             margin-top: 15px;
             font-size: 14px;
             color: #555;
         }
 
-        .footer-link {
-            color: #4A90E2;
+        .login-link a {
+            color: #2575fc;
             text-decoration: none;
             font-weight: bold;
-            margin: 0 5px;
         }
 
-        .footer-link:hover {
+        .login-link a:hover {
             text-decoration: underline;
         }
     </style>
-    <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
 
 <body>
-    <div>
-
-        <div class="login-container">
-            <div class="login-box">
-                <h2>Masuk</h2>
-                <form>
-                    <label for="email">E-mail*</label>
-                    <input type="email" id="email" placeholder="Masukkan email" required>
-
-                    <label for="password">Password*</label>
-                    <div class="password-container">
-                        <input type="password" id="password" placeholder="Masukkan password" required>
-                        <button type="button" class="toggle-password">&#128065;</button>
-                    </div>
-                    <!-- <span class="error-message">* password salah</span> -->
-
-                    <button type="submit" class="login-button">Masuk</button>
-                </form>
-                <div class="login-footer">
-                    <a href="#">Lupa password?</a> atau
-                    <a href="#"> Daftar</a>
-                </div>
+    <div class="register-container">
+        <h2 class="register-title">Form Registrasi</h2>
+        <form>
+            <div class="form-group">
+                <label for="nama">Nama*</label>
+                <input type="text" id="nama" placeholder="Masukkan nama" required>
             </div>
+            <div class="form-group">
+                <label for="username">Username*</label>
+                <input type="text" id="username" placeholder="Masukkan username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password*</label>
+                <input type="password" id="password" placeholder="Masukkan password" required>
+            </div>
+            <div class="form-group">
+                <label for="no-telepon">No Telepon*</label>
+                <input type="tel" id="no-telepon" placeholder="Masukkan no telepon" required>
+            </div>
+            <button type="submit" class="register-button">Daftar</button>
+        </form>
+        <div class="login-link">
+            Sudah punya akun? <a href="#">Login di sini</a>
         </div>
     </div>
 </body>
-
-
 
 </html>

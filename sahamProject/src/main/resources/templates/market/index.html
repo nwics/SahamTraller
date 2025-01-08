@@ -4,11 +4,168 @@
 
 <head>
     <title>Web Saham</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        .news-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 10px;
+        }
+
+        .news-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2575fc;
+        }
+
+        .refresh-button {
+            padding: 10px 15px;
+            font-size: 14px;
+            background-color: #2575fc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .refresh-button:hover {
+            background-color: #1a5bbf;
+        }
+
+        .news-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .news-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        .news-item:hover {
+            background-color: #f9f9f9;
+        }
+
+        .news-image {
+            width: 100px;
+            height: 100px;
+            margin-right: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .news-content {
+            flex: 1;
+        }
+
+        .news-title-link {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+            color: #2575fc;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .news-title-link:hover {
+            text-decoration: underline;
+        }
+
+        .news-meta {
+            font-size: 12px;
+            color: #777;
+            margin: 10px 0;
+        }
+
+        .news-summary {
+            font-size: 14px;
+            color: #333;
+            margin: 0;
+            line-height: 1.6;
+        }
+    </style>
+
 </head>
 
 <body>
     <div layout:fragment="content">
-        <h1>Halaman Market</h1>
+        <!-- <h1>Halaman Market</h1> -->
+        <div class="news-container">
+            <div class="news-header">
+                <h1 class="news-title">Market News Saham</h1>
+                <button class="refresh-button">Refresh Berita</button>
+            </div>
+
+            <ul class="news-list">
+                <!-- Item Berita -->
+                <li class="news-item">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/100" alt="Market News">
+                    </div>
+                    <div class="news-content">
+                        <a href="#" class="news-title-link">IHSG Ditutup Menguat di Tengah Sentimen Positif Global</a>
+                        <div class="news-meta">Dipublikasikan: 10 menit yang lalu</div>
+                        <p class="news-summary">IHSG mencatat kenaikan sebesar 0,8% setelah investor merespons positif
+                            data ekonomi global...</p>
+                    </div>
+                </li>
+
+                <li class="news-item">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/100" alt="Market News">
+                    </div>
+                    <div class="news-content">
+                        <a href="#" class="news-title-link">Saham Teknologi Memimpin Penguatan di Asia</a>
+                        <div class="news-meta">Dipublikasikan: 1 jam yang lalu</div>
+                        <p class="news-summary">Indeks teknologi di kawasan Asia melonjak setelah laporan keuangan dari
+                            perusahaan besar...</p>
+                    </div>
+                </li>
+
+                <li class="news-item">
+                    <div class="news-image">
+                        <img src="https://via.placeholder.com/100" alt="Market News">
+                    </div>
+                    <div class="news-content">
+                        <a href="#" class="news-title-link">Investor Waspadai Risiko Kenaikan Suku Bunga</a>
+                        <div class="news-meta">Dipublikasikan: 3 jam yang lalu</div>
+                        <p class="news-summary">Pasar saham bergerak mixed di tengah kekhawatiran tentang potensi
+                            kenaikan suku bunga...</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
     </div>
 </body>
