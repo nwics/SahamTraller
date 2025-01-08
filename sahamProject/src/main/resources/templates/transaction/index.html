@@ -4,11 +4,194 @@
 
 <head>
     <title>Web Saham</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            color: #2575fc;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        /* Transaction Form */
+        .transaction-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .form-group {
+            flex: 1 1 calc(50% - 20px);
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f7f9fc;
+        }
+
+        .transaction-actions {
+            text-align: right;
+            margin-top: 20px;
+        }
+
+        .transaction-actions button {
+            padding: 10px 20px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #2575fc;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .transaction-actions button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Transaction History Table */
+        .transaction-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .transaction-table th,
+        .transaction-table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .transaction-table th {
+            background: #f7f9fc;
+        }
+
+        .positive {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .negative {
+            color: #dc3545;
+            font-weight: bold;
+        }
+    </style>
+
 </head>
 
 <body>
     <div layout:fragment="content">
-        <h1>Halaman Transaksi</h1>
+        <div class="container">
+            <!-- Page Title -->
+            <h1>Transaksi Saham</h1>
+
+            <!-- Transaction Form -->
+            <div class="section">
+                <h2>Form Transaksi</h2>
+                <form class="transaction-form">
+                    <div class="form-group">
+                        <label for="stock-symbol">Simbol Saham</label>
+                        <input type="text" id="stock-symbol" placeholder="Contoh: BBCA" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transaction-type">Jenis Transaksi</label>
+                        <select id="transaction-type" required>
+                            <option value="">Pilih Jenis Transaksi</option>
+                            <option value="buy">Beli</option>
+                            <option value="sell">Jual</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity">Jumlah Lot</label>
+                        <input type="number" id="quantity" placeholder="Masukkan jumlah lot" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Harga per Saham</label>
+                        <input type="number" id="price" placeholder="Masukkan harga saham" required>
+                    </div>
+                    <div class="transaction-actions">
+                        <button type="submit">Kirim Transaksi</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="section">
+                <h2>Riwayat Transaksi</h2>
+                <table class="transaction-table">
+                    <thead>
+                        <tr>
+                            <th>Tanggal</th>
+                            <th>Simbol</th>
+                            <th>Jenis</th>
+                            <th>Jumlah Lot</th>
+                            <th>Harga per Saham</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-01-08</td>
+                            <td>BBCA</td>
+                            <td>Beli</td>
+                            <td>10</td>
+                            <td>Rp 8,500</td>
+                            <td>Rp 85,000</td>
+                        </tr>
+                        <tr>
+                            <td>2025-01-07</td>
+                            <td>UNVR</td>
+                            <td>Jual</td>
+                            <td>5</td>
+                            <td>Rp 4,700</td>
+                            <td>Rp 23,500</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- <h1>Halaman Transaksi</h1> -->
 
     </div>
 </body>

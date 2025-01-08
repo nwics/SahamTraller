@@ -10,6 +10,6 @@ public class MarketNewsController {
 
     @GetMapping("/index")
     public String index() {
-        return "market/index";
+        return "marketnews/index";
     }
 }
