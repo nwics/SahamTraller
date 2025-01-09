@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Form Registrasi</title>
-    <script src="register.js"></script>
+    <script src="../jquery-3.7.1.min.js"></script>
+    <!-- <script src="../Register/register.js"></script> -->
     <style>
         body {
             display: flex;
@@ -103,37 +104,48 @@
         <h2 class="register-title">Form Registrasi</h2>
         <form>
             <div class="form-group">
-                <label for="nama">Nama*</label>
-                <input type="text" id="nama" placeholder="Masukkan nama" required>
+                <label for="nama">Nama</label>
+                <input type="text" id="nama" placeholder="Masukkan nama" oninput="getInput()" required>
             </div>
             <div class="form-group">
-                <label for="username">Username*</label>
-                <input type="text" id="username" placeholder="Masukkan username" required>
+                <label for="username">Username</label>
+                <input type="text" id="username" placeholder="Masukkan username" oninput="getInput()" required>
             </div>
             <div class="form-group">
-                <label for="email">Email*</label>
-                <input type="text" id="email" placeholder="Masukkan email" required>
+                <label for="email">Email</label>
+                <input type="text" id="email" placeholder="Masukkan email" oninput="getInput()" required>
             </div>
             <div class="form-group">
-                <label for="password">Password*</label>
-                <input type="password" id="password" placeholder="Masukkan password" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Masukkan password" oninput="getInput()" required>
             </div>
             <div class="form-group">
-                <label for="no-telepon">No Telepon*</label>
-                <input type="tel" id="no-telepon" placeholder="Masukkan no telepon" required>
+                <label for="no-telepon">No Telepon</label>
+                <input type="tel" id="telepon" placeholder="Masukkan no telepon" oninput="getInput()" required>
             </div>
             <button type="submit" class="register-button" onclick="">Daftar</button>
         </form>
-        <div class="login-link" onclick="openModal()">
-            Sudah punya akun? <a href="#">Login di sini</a>
+        <div class="login-link">
+            Sudah punya akun? <a href="/login/index">Login di sini</a>
         </div>
+        <!-- <h1 onclick="openModal()">coba tekan</h1> -->
     </div>
 </body>
 
 </html>
 
 <script>
-    const openModal = () => {
-        alert("berhasil ditekan")
+    // const openModal = () => {
+    //     alert("berhasil ditekan")
+    // }
+
+    const getInput = () => {
+        let nameValue = $("#nama").val()
+        let userNameValue = $("#username").val()
+        let emailValue = $("#email").val()
+        let passwordValue = $("#password").val()
+        let teleponValue = $("#telepon").val()
+        console.log("coba : ", nameValue, userNameValue)
     }
+
 </script>
