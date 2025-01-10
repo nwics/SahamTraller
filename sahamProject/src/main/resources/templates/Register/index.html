@@ -148,4 +148,15 @@
         console.log("coba : ", nameValue, userNameValue)
     }
 
+    const sendOtp = (email) => {
+        $.ajax({
+            type: "Get",
+            url: "/api/otp/get?email=" + email,
+            contentType: "application/json",
+            success: function (response) {
+                console.log("hasil response : ", response)
+            }
+        })
+    }
+
 </script>

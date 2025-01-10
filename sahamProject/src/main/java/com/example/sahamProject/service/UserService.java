@@ -6,9 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.sahamProject.dao.AdminRepository;
 import com.example.sahamProject.dao.BiodataRepository;
+import com.example.sahamProject.dao.CustomerRepository;
 import com.example.sahamProject.dao.UserRepository;
+import com.example.sahamProject.model.MAdmin;
 import com.example.sahamProject.model.MBiodata;
+import com.example.sahamProject.model.MCustomer;
 import com.example.sahamProject.model.MUser;
 
 @Service
@@ -19,6 +23,12 @@ public class UserService {
 
     @Autowired
     private BiodataRepository biodataRepository;
+
+    @Autowired
+    private AdminRepository adminRepository;
+
+    @Autowired
+    private CustomerRepository customerRepository;
 
     public String getValidasiEmail(String email) {
 
@@ -74,8 +84,45 @@ public class UserService {
 
         tempMUser.setMRole(user.getMRole());
         // tempMUser.setRole(this.userRepository.findById(user.getMRole()).orElse(null));
-        tempMUser.setBiodataId(teMBiodata);
+        tempMUser.setMBiodataId(teMBiodata);
+        tempMUser.setBiodataId(teMBiodata.getId());
+        tempMUser.setCreatedBy(user.getId());
+        tempMUser.setCreatedOn(LocalDateTime.now());
+        tempMUser.setEmail(user.getEmail());
+        tempMUser.setPassword(user.getPassword());
 
+        tempMUser = this.userRepository.save(tempMUser);
+        tempMBiodata.setCreatedBy(tempMUser.getId());
+        this.biodataRepository.save(tempMBiodata);
+
+        String userRole = tempMUser.getMRole().getName();
+        if (userRole.equals("ADMIN")) {
+            MAdmin admin = new MAdmin();
+            admin.setMBiodata(teMBiodata);
+            admin.setBiodataId(teMBiodata.getId());
+            admin.setIsDelete(false);
+            admin.setCreatedBy(tempMUser.getId());
+            admin.setCreatedOn(LocalDateTime.now());
+
+            admin = this.adminRepository.save(admin);
+
+            String formatedId = String.format("%05d", admin.getId());
+            admin.setCode("ADM" + formatedId);
+            this.adminRepository.save(admin);
+        }
+
+        else if (userRole.equals("CUSTOMER")) {
+            MCustomer customer = new MCustomer();
+            customer.setMBiodata(teMBiodata);
+            customer.setBiodataId(tempMBiodata.getId());
+            customer.setIsDelete(false);
+            customer.setCreatedOn(LocalDateTime.now());
+            customer.setCreatedBy(tempMUser.getId());
+
+            customer = this.customerRepository.save(customer);
+        }
+
+        return "success";
     }
 
 }
