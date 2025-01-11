@@ -102,28 +102,32 @@
 <body>
     <div class="register-container">
         <h2 class="register-title">Form Registrasi</h2>
-        <form>
+        <form id="register-form">
             <div class="form-group">
                 <label for="nama">Nama</label>
-                <input type="text" id="nama" placeholder="Masukkan nama" oninput="getInput()" required>
+                <input type="text" id="nama" placeholder="Masukkan nama">
             </div>
             <div class="form-group">
                 <label for="username">Username</label>
-                <input type="text" id="username" placeholder="Masukkan username" oninput="getInput()" required>
+                <input type="text" id="username" placeholder="Masukkan username">
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="text" id="email" placeholder="Masukkan email" oninput="getInput()" required>
+                <input type="text" id="email" placeholder="Masukkan email">
             </div>
             <div class="form-group">
                 <label for="password">Password</label>
-                <input type="password" id="password" placeholder="Masukkan password" oninput="getInput()" required>
+                <input type="password" id="password" placeholder="Masukkan password">
+            </div>
+            <div class="form-group">
+                <label for="password">Masukkan Ulang Password</label>
+                <input type="password" id="confirmPassword" placeholder="Masukkan password">
             </div>
             <div class="form-group">
                 <label for="no-telepon">No Telepon</label>
-                <input type="tel" id="telepon" placeholder="Masukkan no telepon" oninput="getInput()" required>
+                <input type="tel" id="telepon" placeholder="Masukkan no telepon">
             </div>
-            <button type="submit" class="register-button" onclick="">Daftar</button>
+            <button type="submit" class="register-button" onclick="registerAccount()">Daftar</button>
         </form>
         <div class="login-link">
             Sudah punya akun? <a href="/login/index">Login di sini</a>
@@ -135,28 +139,212 @@
 </html>
 
 <script>
-    // const openModal = () => {
-    //     alert("berhasil ditekan")
+    // make form 
+    let form = `
+        <form id="email-form">
+            <div class='modal-body'>
+            <input type="hidden" id="emailId">
+            <span class="mb-3"> Masukkan Kode OTP yang telah dikirim ke email anda.</span><br><br>
+            <div class="form-group">
+            <label>Email<span class="text-danger">*</span></label>
+            <input type="email" class="form-control" id="namaEmail" oninput="resetError()"/>
+            <div class='text-danger' id='error_nama' style='display:none;'></div>
+            <div>
+                <a href="javascript:void(0);" id="resendOtp" style="" class="text-muted disabled not-allowed"></a>
+            </div>
+            </div>
+            </div>
+            </form>;
+            `
+
+    // const sendOtp = (email) => {
+    //     return $.ajax({
+    //         type: "get",
+    //         url: "/api/otp/get?email=" + email,
+    //         contentType: "application/json",
+    //         success: function (response) {
+    //             console.log("hasil response : ", response)
+    //         }
+    //     })
     // }
 
-    const getInput = () => {
-        let nameValue = $("#nama").val()
-        let userNameValue = $("#username").val()
-        let emailValue = $("#email").val()
-        let passwordValue = $("#password").val()
-        let teleponValue = $("#telepon").val()
-        console.log("coba : ", nameValue, userNameValue)
-    }
+    const registerAccount = () => {
+        let name = $("#nama").val().trim()
+        let username = $("#username").val().trim()
+        let email = $("#email").val().trim()
+        let password = $("#password").val().trim()
+        let confirmPassword = $("#confirmPassword").val().trim()
+        let telepon = $("#telepon").val().trim()
 
-    const sendOtp = (email) => {
-        $.ajax({
-            type: "Get",
-            url: "/api/otp/get?email=" + email,
+
+        const data = {
+            name: name,
+            username: username,
+            email: email,
+            password: password,
+            confirmPassword: confirmPassword,
+            telepon: telepon
+        }
+        console.log("ini data", data)
+
+        return $.ajax({
+            type: "get",
+            url: "/api/user/valid/email",
             contentType: "application/json",
-            success: function (response) {
-                console.log("hasil response : ", response)
+            data: { email: email },
+            success: (response) => {
+                alert("Pendaftaran behasil! ")
+                createUser(email, password)
+                // sendOtp(email).then(response => {
+                //     console.log("OTP berhasil dikirim")
+                //     otpChecking(email)
+                // }).catch(response => {
+                //     console.log("failed send otp", response)
+                // })
+            },
+            error: (xhr, status, error) => {
+                console.error("Error pada request:", error);
             }
         })
     }
+
+
+
+    // const otpChecking = (email) => {
+    //     $(".modal-body").html(form)
+    //     $(".modal-title").text("Verifikasi Email")
+    //     $("#btnSubmit").text("Konfirmasi")
+    //     $("#modal").modal("show")
+    //     startCountdown(email)
+    // }
+
+    // const startTheCountdown = (seconds) => {
+    //     console.log("hasil seconds", seconds)
+    //     var interval = setInterval(() => {
+    //         var minutes = Math.floor(seconds / 60)
+    //         var remainingSecond = seconds % 60
+    //         var formattedTime = ('0' + minutes).slice(-2) + ':' + ('0' + remainingSeconds).slice(-2);
+    //         $("#resendOtp").text("Kirim Ulang OTP (" + formattedTime + ")")
+    //         seconds--
+    //         if (seconds < 0) {
+    //             $("#resendOtp").removeClass('disabled')
+    //             $("#resendOtp").removeClass("not-allowed")
+    //             $("#resendOtp").removeClass("text-muted")
+    //             $("#resendOtp").css({
+    //                 "color": "blue"
+    //             })
+    //             $("#resendOtp").text("Kirim Ulang OTP")
+
+    //             clearInterval(interval)
+    //         }
+    //         else {
+    //             $("#resendOtp").removeClass('disabled')
+    //             $("#resendOtp").removeClass("not-allowed")
+    //             $("#resendOtp").removeClass("text-muted")
+    //         }
+    //     }, 1000)
+    // }
+
+    const startCountdown = (email) => {
+        getRemainingTime().then(response => {
+            var seconds = response
+            startTheCountdown(seconds)
+        }).catch(response => {
+            var seconds = 180
+            startTheCountdown(seconds)
+        })
+
+    }
+
+    const getRemainingTime = () => {
+        let name = $("#nama").val().trim()
+        let username = $("#username").val().trim()
+        let email = $("#email").val().trim()
+        let password = $("#password").val().trim()
+        let telepon = $("#telepon").val().trim()
+        var second = 0
+
+        const listData = {
+            name: name,
+            username: username,
+            email: email,
+            password: password,
+            telepon: telepon
+        }
+
+        return $.ajax({
+            type: "get",
+            url: "/api/otp/otp-request",
+            data: {
+                listData: listData
+            },
+            success: (response) => {
+                if (response == null) {
+                    second = 5
+                }
+                else {
+                    second = response
+                }
+            },
+            error: (e) => {
+                console.log("error", e)
+            }
+        })
+    }
+
+    const createUser = (email, password) => {
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                type: "post",
+                url: "/api/user/add/email-password",
+                data: {
+                    email: email,
+                    password: password
+                },
+                success: (response) => {
+                    console.log("new user created with only email and password", response)
+                    newBiodata(email, password);
+                },
+                error: () => {
+                    console.log("failed to create new user")
+                }
+            })
+        })
+    }
+
+    const newBiodata = (email, password) => {
+        var listData = {
+            id: null,
+            email: email,
+            password: password,
+            loginAttempt: null,
+            isLocked: false,
+            lastLogin: null
+        }
+        console.log("hasil dari list data : ", listData)
+        return
+        $.ajax({
+            type: "post",
+            url: "/api/user/add/userdata",
+            data: JSON.stringify(listData),
+            contentType: "application/json",
+            success: (response) => {
+                Swal.fire({
+                    icon: "success",
+                    title: "Pendaftaran Berhasil!",
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
+        })
+    }
+
+
+    $(document).ready(() => {
+        $("#register-form").submit((event) => {
+            event.preventDefault(); // Mencegah refresh halaman
+            registerAccount();
+        });
+    });
 
 </script>
