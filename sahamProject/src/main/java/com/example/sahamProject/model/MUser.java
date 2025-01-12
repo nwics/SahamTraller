@@ -33,7 +33,7 @@ public class MUser extends BaseEntity {
     @JoinColumn(name = "biodata_id", referencedColumnName = "id", insertable = false, updatable = false)
     private MBiodata mBiodataId;
 
-    @Column(name = "biodata")
+    @Column(name = "biodata_id")
     private Long biodataId;
 
     @Column(name = "email", length = 100)

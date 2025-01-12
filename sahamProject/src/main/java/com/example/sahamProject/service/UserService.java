@@ -59,6 +59,8 @@ public class UserService {
         try {
             MUser temp = new MUser();
             temp.setEmail(user.getEmail());
+            // temp.setBiodataId(user.getId());
+            // temp.setPassword(user.getPassword());
             temp.setCreatedOn(LocalDateTime.now());
             temp = this.userRepository.save(temp);
 
@@ -76,8 +78,16 @@ public class UserService {
         MBiodata tempMBiodata = new MBiodata();
         MUser tempMUser = new MUser();
 
-        tempMBiodata.setFullname(user.getMBiodataId().getFullname());
-        tempMBiodata.setMobilePhone(user.getMBiodataId().getMobilePhone());
+        if (user.getMBiodataId() != null) {
+            tempMBiodata.setMobilePhone(user.getMBiodataId().getMobilePhone());
+            tempMBiodata.setFullname(user.getMBiodataId().getFullname());
+
+        } else {
+            tempMBiodata.setMobilePhone("021021");
+            tempMBiodata.setFullname("mo salah");
+        }
+        // tempMBiodata.setFullname(user.getMBiodataId().getFullname());
+        // tempMBiodata.setMobilePhone(user.getMBiodataId().getMobilePhone());
         tempMBiodata.setCreatedOn(LocalDateTime.now());
 
         MBiodata teMBiodata = this.biodataRepository.save(tempMBiodata);

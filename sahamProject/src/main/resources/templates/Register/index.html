@@ -191,7 +191,7 @@
             type: "get",
             url: "/api/user/valid/email",
             contentType: "application/json",
-            data: { email: email },
+            data: { email: email, password: password },
             success: (response) => {
                 alert("Pendaftaran behasil! ")
                 createUser(email, password)
@@ -316,19 +316,20 @@
         var listData = {
             id: null,
             email: email,
+
             password: password,
             loginAttempt: null,
             isLocked: false,
             lastLogin: null
         }
         console.log("hasil dari list data : ", listData)
-        return
-        $.ajax({
+        return $.ajax({
             type: "post",
             url: "/api/user/add/userdata",
             data: JSON.stringify(listData),
             contentType: "application/json",
             success: (response) => {
+                console.log("masuk ke add user : ", response)
                 Swal.fire({
                     icon: "success",
                     title: "Pendaftaran Berhasil!",
