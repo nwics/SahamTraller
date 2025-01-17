@@ -42,6 +42,9 @@ public class MUser extends BaseEntity {
     @Column(name = "password", length = 255)
     private String password;
 
+    @Column(name = "username")
+    private String username;
+
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
