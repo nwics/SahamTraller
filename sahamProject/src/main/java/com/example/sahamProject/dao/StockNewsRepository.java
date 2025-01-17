@@ -2,8 +2,8 @@ package com.example.sahamProject.dao;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.sahamProject.model.MMarketTrends;
+import com.example.sahamProject.model.MStockNews;
 
-public interface StockNewsRepository extends JpaRepository<MMarketTrends, Long> {
+public interface StockNewsRepository extends JpaRepository<MStockNews, Long> {
 
 }
