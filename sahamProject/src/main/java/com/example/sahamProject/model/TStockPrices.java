@@ -3,12 +3,21 @@ package com.example.sahamProject.model;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.Getter;
+import lombok.Setter;
 
+@Entity
+@Table(name = "stock_prices")
+@Setter
+@Getter
 public class TStockPrices extends BaseEntity {
 
     @Id
@@ -16,8 +25,8 @@ public class TStockPrices extends BaseEntity {
     @Column(name = "id")
     private Long id;
 
-    @OneToOne
-    @JoinColumn(name = "company_id", referencedColumnName = "id", updatable = false, insertable = false)
+    @ManyToOne
+    @JoinColumn(name = "company_id", referencedColumnName = "id", insertable = false, updatable = false)
     private MCompany mCompany;
 
     @Column(name = "date")

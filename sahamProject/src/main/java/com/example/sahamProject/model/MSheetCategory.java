@@ -33,4 +33,10 @@ public class MSheetCategory extends BaseEntity {
     @Column(name = "year")
     private LocalDateTime year;
 
+    @Column(name = "quarter")
+    private String quarter;
+
+    @Column(name = "price")
+    private String price;
+
 }

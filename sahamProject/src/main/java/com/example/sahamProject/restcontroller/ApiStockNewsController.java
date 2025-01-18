@@ -14,7 +14,7 @@ import com.example.sahamProject.service.StockNewsService;
 
 @RestController
 @RequestMapping("/api/")
-public class ApiStockNews {
+public class ApiStockNewsController {
 
     @Autowired
     private StockNewsService stockNewsService;

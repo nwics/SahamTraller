@@ -1,0 +1,21 @@
+package com.example.sahamProject.dto;
+
+import java.util.List;
+
+import com.example.sahamProject.model.MCompany;
+import com.example.sahamProject.model.TStockPrices;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class DashboardResponseDTO {
+    private List<MCompany> companies;
+    private List<TStockPrices> stockPrices;
+
+}
