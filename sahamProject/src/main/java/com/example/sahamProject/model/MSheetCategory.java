@@ -31,7 +31,7 @@ public class MSheetCategory extends BaseEntity {
     private String name;
 
     @Column(name = "year")
-    private LocalDateTime year;
+    private String year;
 
     @Column(name = "quarter")
     private String quarter;

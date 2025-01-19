@@ -14,24 +14,26 @@
         }
 
         .container {
-            width: 80%;
+            /* width: 80%; */
             margin: 20px auto;
             background: #fff;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             display: flex;
+            flex-wrap: wrap;
             gap: 20px;
         }
 
-        .left-column,
-        .right-column {
+        .column {
             flex: 1;
+            min-width: 300px;
         }
 
         .stock-header {
             border-bottom: 2px solid #ddd;
             padding-bottom: 10px;
+            margin-bottom: 20px;
         }
 
         .stock-name {
@@ -55,22 +57,46 @@
             background: #f8f8f8;
         }
 
-        .stock-chart {
+        .chart-container {
             background: #eaeaea;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #555;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .financial-info {
+            margin-top: 20px;
+        }
+
+        .financial-info h3 {
+            border-bottom: 2px solid #ddd;
+            padding-bottom: 5px;
+            margin-bottom: 10px;
+        }
+
+        .financial-info table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .financial-info th,
+        .financial-info td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .financial-info th {
+            background: #f8f8f8;
         }
     </style>
 </head>
 
 <body>
     <div layout:fragment="content">
+
         <div class="container">
-            <div class="left-column">
+            <div class="column">
                 <div class="stock-header">
                     <div class="stock-name">PT ABC Tbk (ABC)</div>
                 </div>
@@ -104,16 +130,75 @@
                     </table>
                 </div>
             </div>
-            <div class="right-column">
+
+            <div class="column">
                 <h3>Grafik Saham</h3>
                 <div class="chart-container">
                     <canvas id="stockChart"></canvas>
                 </div>
                 <h3>Analisis Saham</h3>
                 <p>Analisis terkini menunjukkan tren positif dengan potensi pertumbuhan yang signifikan dalam beberapa
-                    bulan ke depan.</p>
+                    bulan
+                    ke depan.</p>
             </div>
-        </div> <!-- <h1>Halaman detail saham</h1> -->
+        </div>
+
+        <div class="">
+            <div class="column financial-info">
+                <h3>Income Statement</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                            <th>Q3</th>
+                            <th>Q4</th>
+                        </tr>
+                    </thead>
+                    <tbody id="income">
+                        <!-- Data akan diisi melalui JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="column financial-info">
+                <h3>Balance Sheet</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                            <th>Q3</th>
+                            <th>Q4</th>
+                        </tr>
+                    </thead>
+                    <tbody id="balanceSheet">
+                        <!-- Data akan diisi melalui JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="column financial-info">
+                <h3>Cash</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Q1</th>
+                            <th>Q2</th>
+                            <th>Q3</th>
+                            <th>Q4</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cash">
+                        <!-- Data akan diisi melalui JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+
 
     </div>
 </body>
@@ -121,6 +206,9 @@
 </html>
 
 <script>
+    $(() => {
+        getAllData()
+    })
     const ctx = document.getElementById('stockChart').getContext('2d');
     const stockChart = new Chart(ctx, {
         type: 'line',
@@ -142,4 +230,89 @@
             }
         }
     });
+
+    const getAllData = () => {
+        $.ajax({
+            url: "/api/stockdetail",
+            type: "get",
+            contentType: "application/json",
+            success: (response) => {
+                // console.log(response[0].msheetId.name)
+                console.log(response)
+                // for (let i = 0; i < response.length; i++) {
+                //     console.log(i)
+                // }
+                getListData(response)
+
+            }
+        })
+    }
+    const getListData = (response) => {
+        const getNameIncome = $("#income")
+        const getNameBalanceSheet = $("#balanceSheet")
+        const getNameCash = $("#cash")
+        getNameBalanceSheet.empty()
+        getNameIncome.empty()
+        getNameCash.empty()
+        let incomeData = {};
+        let balanceSheetData = {};
+        let cashData = {};
+        response.forEach(item => {
+            const key = item.name
+            const quarterKey = `Q${item.quarter}`
+            if (item.msheetId.name === 'Income') {
+                // getNameIncome
+                if (!incomeData[key]) {
+                    incomeData[key] = { name: item.name, Q1: "-", Q2: "-", Q3: "-", Q4: "-" };
+                }
+                incomeData[key][quarterKey] = item.price
+            }
+            else if (item.msheetId.name === 'Balancesheet') {
+                if (!balanceSheetData[key]) {
+                    balanceSheetData[key] = { name: item.name, Q1: "-", Q2: "-", Q3: "-", Q4: "-" };
+                }
+                balanceSheetData[key][quarterKey] = item.price
+            }
+            else if (item.msheetId.name === 'Cash') {
+                if (!cashData[key]) {
+                    cashData[key] = { name: item.name, Q1: "-", Q2: "-", Q3: "-", Q4: "-" };
+                }
+                cashData[key][quarterKey] = item.price
+            }
+        });
+        Object.values(incomeData).forEach(row => {
+            getNameIncome.append(`
+            <tr>
+                <th>${row.name}</th>
+                <td>${row.Q1}</td>
+                <td>${row.Q2}</td>
+                <td>${row.Q3}</td>
+                <td>${row.Q4}</td>
+            </tr>
+        `);
+        });
+        Object.values(balanceSheetData).forEach(row => {
+            getNameBalanceSheet.append(`
+            <tr>
+                <th>${row.name}</th>
+                <td>${row.Q1}</td>
+                <td>${row.Q2}</td>
+                <td>${row.Q3}</td>
+                <td>${row.Q4}</td>
+            </tr>
+        `);
+        });
+        Object.values(cashData).forEach(row => {
+            getNameCash.append(`
+            <tr>
+                <th>${row.name}</th>
+                <td>${row.Q1}</td>
+                <td>${row.Q2}</td>
+                <td>${row.Q3}</td>
+                <td>${row.Q4}</td>
+            </tr>
+        `);
+        });
+        // if(response.)
+    }
 </script>

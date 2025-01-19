@@ -34,4 +34,7 @@ public class MStockNews extends BaseEntity {
 
     @Column(name = "content", nullable = false, length = 255)
     private String content;
+
+    @Column(name = "image_path")
+    private String imagePath;
 }

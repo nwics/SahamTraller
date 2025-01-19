@@ -28,4 +28,7 @@ public class MCompany extends BaseEntity {
 
     @Column(name = "sector")
     private String sector;
+
+    @Column(name = "image_path")
+    private String imagePath;
 }

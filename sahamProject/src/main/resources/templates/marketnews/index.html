@@ -120,54 +120,58 @@
 
 <body>
     <div layout:fragment="content">
-        <!-- <h1>Halaman Market</h1> -->
-        <div class="news-container">
+        <div class="">
             <div class="news-header">
                 <h1 class="news-title">Market News Saham</h1>
-                <button class="refresh-button">Refresh Berita</button>
+                <button class="refresh-button" onclick="getAllData()">Refresh Berita</button>
             </div>
 
-            <ul class="news-list">
-                <!-- Item Berita -->
-                <li class="news-item">
-                    <div class="news-image">
-                        <img src="https://via.placeholder.com/100" alt="Market News">
-                    </div>
-                    <div class="news-content">
-                        <a href="#" class="news-title-link">IHSG Ditutup Menguat di Tengah Sentimen Positif Global</a>
-                        <div class="news-meta">Dipublikasikan: 10 menit yang lalu</div>
-                        <p class="news-summary">IHSG mencatat kenaikan sebesar 0,8% setelah investor merespons positif
-                            data ekonomi global...</p>
-                    </div>
-                </li>
-
-                <li class="news-item">
-                    <div class="news-image">
-                        <img src="https://via.placeholder.com/100" alt="Market News">
-                    </div>
-                    <div class="news-content">
-                        <a href="#" class="news-title-link">Saham Teknologi Memimpin Penguatan di Asia</a>
-                        <div class="news-meta">Dipublikasikan: 1 jam yang lalu</div>
-                        <p class="news-summary">Indeks teknologi di kawasan Asia melonjak setelah laporan keuangan dari
-                            perusahaan besar...</p>
-                    </div>
-                </li>
-
-                <li class="news-item">
-                    <div class="news-image">
-                        <img src="https://via.placeholder.com/100" alt="Market News">
-                    </div>
-                    <div class="news-content">
-                        <a href="#" class="news-title-link">Investor Waspadai Risiko Kenaikan Suku Bunga</a>
-                        <div class="news-meta">Dipublikasikan: 3 jam yang lalu</div>
-                        <p class="news-summary">Pasar saham bergerak mixed di tengah kekhawatiran tentang potensi
-                            kenaikan suku bunga...</p>
-                    </div>
-                </li>
+            <ul class="news-list" id="newsList">
+                <!-- News items will be dynamically inserted here -->
             </ul>
         </div>
-
     </div>
 </body>
 
 </html>
+
+<script>
+    $(
+        () => {
+            getAllData()
+        }
+    )
+    const getAllData = () => {
+
+        $.ajax({
+            url: "/api/news",
+            type: 'get',
+            contentType: "application/json",
+            success: (response) => {
+                console.log(response)
+                newsItemList(response)
+            }
+        })
+    }
+
+    const newsItemList = (response) => {
+        const newsList = $('#newsList')
+        newsList.empty()
+        response.forEach(item => {
+            console.log(item.mcompanyId)
+            const newsItem = `
+                <li class="news-item">
+                    <div class="news-image">
+                        <img src="${item.imagePath || 'https://via.placeholder.com/100'}" alt="Market News">
+                    </div>
+                    <div class="news-content">
+                        <a href="${item.url}" class="news-title-link">${item.title}</a>
+                        <div class="news-meta">Dipublikasikan: ${item.createdOn}</div>
+                        <p class="news-summary">${item.content}</p>
+                    </div>
+                </li>
+            `;
+            newsList.append(newsItem)
+        });
+    }
+</script>

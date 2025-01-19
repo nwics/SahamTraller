@@ -9,25 +9,22 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.sahamProject.model.MStockNews;
-import com.example.sahamProject.service.StockNewsService;
+import com.example.sahamProject.model.MSheetCategory;
+import com.example.sahamProject.service.StockDetailService;
 
 @RestController
-@RequestMapping("/api/news")
-public class ApiStockNewsController {
+@RequestMapping("/api/stockdetail")
+public class ApiStockDetailController {
 
     @Autowired
-    private StockNewsService stockNewsService;
+    private StockDetailService stockDetailService;
 
     @GetMapping("")
     public ResponseEntity<?> getAllData() {
-
-        List<MStockNews> response = stockNewsService.getAllNews();
-        if (response.isEmpty()) {
+        List<MSheetCategory> listData = stockDetailService.getAllSheetCategory();
+        if (listData.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
-
+        return new ResponseEntity<>(listData, HttpStatus.OK);
     }
-
 }
