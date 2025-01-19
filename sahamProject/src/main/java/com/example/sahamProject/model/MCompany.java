@@ -31,4 +31,7 @@ public class MCompany extends BaseEntity {
 
     @Column(name = "image_path")
     private String imagePath;
+
+    @Column(name = "company_name")
+    private String companyName;
 }

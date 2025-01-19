@@ -98,18 +98,18 @@
         <div class="container">
             <div class="column">
                 <div class="stock-header">
-                    <div class="stock-name">PT ABC Tbk (ABC)</div>
+                    <div class="stock-name" id="nameCompany"></div>
                 </div>
                 <div class="stock-info">
                     <h3>Informasi Saham</h3>
                     <table>
                         <tr>
                             <th>Kode Saham</th>
-                            <td>ABC</td>
+                            <td id="code"></td>
                         </tr>
                         <tr>
                             <th>Deskripsi</th>
-                            <td>Perusahaan teknologi terkemuka di Indonesia.</td>
+                            <td id="deskripsi">Perusahaan teknologi terkemuka di Indonesia.</td>
                         </tr>
                         <tr>
                             <th>Harga Tertinggi</th>
@@ -251,15 +251,23 @@
         const getNameIncome = $("#income")
         const getNameBalanceSheet = $("#balanceSheet")
         const getNameCash = $("#cash")
+        const companyName = $("#nameCompany")
+        const companycode = $("#code")
+        const companyDeskripsi = $("#deskripsi")
         getNameBalanceSheet.empty()
         getNameIncome.empty()
         getNameCash.empty()
         let incomeData = {};
         let balanceSheetData = {};
         let cashData = {};
+        companyName.append(response[0].msheetId.mcompanyId.companyName)
+        companycode.append(response[0].msheetId.mcompanyId.name)
+        companyDeskripsi.append(response[0].msheetId.mcompanyId.profileCompany)
         response.forEach(item => {
+            // companyName.append(item.msheetId.mcompanyId.companyName)
             const key = item.name
             const quarterKey = `Q${item.quarter}`
+
             if (item.msheetId.name === 'Income') {
                 // getNameIncome
                 if (!incomeData[key]) {

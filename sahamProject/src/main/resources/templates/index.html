@@ -215,21 +215,21 @@
 			<div class="section">
 				<h2>Top Trending Saham</h2>
 				<div class="stocks-grid">
-					<div class="stock-card">
-						<div class="stock-symbol">AAPL</div>
-						<div class="stock-price">$145.30</div>
+					<div class="stock-card" id="bodyCard">
+						<!-- <div class="stock-symbol" id="code">AAPL</div>
+						<div class="stock-price" id="price">$145.30</div>
+						<div class="stock-change positive">+0.87%</div> -->
+					</div>
+					<!-- <div class="stock-card" id="">
+						<div class="stock-symbol" id="code">AAPL</div>
+						<div class="stock-price" id="price">$145.30</div>
 						<div class="stock-change positive">+0.87%</div>
 					</div>
-					<div class="stock-card">
-						<div class="stock-symbol">TSLA</div>
-						<div class="stock-price">$670.50</div>
-						<div class="stock-change negative">-0.80%</div>
-					</div>
-					<div class="stock-card">
-						<div class="stock-symbol">GOOGL</div>
-						<div class="stock-price">$2,950.00</div>
-						<div class="stock-change positive">+0.41%</div>
-					</div>
+					<div class="stock-card" id="">
+						<div class="stock-symbol" id="code">AAPL</div>
+						<div class="stock-price" id="price">$145.30</div>
+						<div class="stock-change positive">+0.87%</div>
+					</div> -->
 				</div>
 			</div>
 
@@ -288,3 +288,26 @@
 </body>
 
 </html>
+
+<script>
+	$(() => {
+
+		getAllData()
+	})
+	const getAllData = () => {
+		let stockPrices
+		$.ajax({
+			url: "/api/dashboard/all",
+			type: "get",
+			contentType: "application/json",
+			success: (response) => {
+				console.log(response)
+				stockPrices = response.stockPrices
+				console.log(stockPrices)
+			}
+		})
+	}
+	const getTopSaham = (response) => {
+
+	}
+</script>
