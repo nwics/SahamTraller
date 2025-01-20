@@ -208,29 +208,8 @@
 <script>
     $(() => {
         getAllData()
+        getStockData()
     })
-    const ctx = document.getElementById('stockChart').getContext('2d');
-    const stockChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat'],
-            datasets: [{
-                label: 'Harga Saham',
-                data: [10200, 10500, 10350, 10700, 10600],
-                borderColor: 'blue',
-                fill: false
-            }]
-        },
-        options: {
-            responsive: true,
-            scales: {
-                y: {
-                    beginAtZero: false
-                }
-            }
-        }
-    });
-
     const getAllData = () => {
         $.ajax({
             url: "/api/stockdetail",
@@ -247,6 +226,51 @@
             }
         })
     }
+
+    const getStockData = () => {
+        $.ajax({
+            url: "/api/stockdetail/prices",
+            type: "get",
+            contentType: "application/json",
+            success: (response) => {
+                chartStock(response)
+                console.log(response)
+            }
+        })
+    }
+
+    const chartStock = (response) => {
+        const ctx = document.getElementById('stockChart').getContext('2d');
+
+
+        const labels = response.map(item => new Date(item.date).toLocaleDateString());
+        const data = response.map(item => parseFloat(item.openPrice));
+        console.log(data, labels)
+
+        const stockChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels, // Menggunakan date sebagai label
+                datasets: [{
+                    label: 'Harga Saham',
+                    data: data,
+                    borderColor: 'blue',
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: false
+                    }
+                }
+            }
+        });
+    };
+
+
+
     const getListData = (response) => {
         const getNameIncome = $("#income")
         const getNameBalanceSheet = $("#balanceSheet")

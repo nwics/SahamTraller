@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,16 @@ public class ApiDashboardController {
         }
         DashboardResponseDTO responseDTO = new DashboardResponseDTO(companies, storkcPrices);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+        try {
+            MCompany mCompany = this.dashboardService.getById(id);
+            return new ResponseEntity<>(mCompany, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

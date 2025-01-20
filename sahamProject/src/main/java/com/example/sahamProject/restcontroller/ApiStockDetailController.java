@@ -6,10 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.sahamProject.model.MCompany;
 import com.example.sahamProject.model.MSheetCategory;
+import com.example.sahamProject.model.TStockPrices;
 import com.example.sahamProject.service.StockDetailService;
 
 @RestController
@@ -26,5 +29,24 @@ public class ApiStockDetailController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(listData, HttpStatus.OK);
+    }
+
+    @GetMapping("/prices")
+    public ResponseEntity<?> getDataStockPrices() {
+        List<TStockPrices> listStockPrices = stockDetailService.getAllStockPrices();
+        if (listStockPrices.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(listStockPrices, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getDataById(@PathVariable("id") Long id) {
+        try {
+            MCompany mCompany = this.stockDetailService.getById(id);
+            return new ResponseEntity<>(mCompany, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+        }
     }
 }

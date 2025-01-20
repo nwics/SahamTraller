@@ -26,4 +26,15 @@ public class DashboardService {
     public List<MCompany> getAllCompany() {
         return companyRepository.findAll();
     }
+
+    public MCompany getById(Long id) {
+        MCompany temp = this.companyRepository.findByIdAndIsDeleteFalse(id).get(0);
+        return temp;
+    }
+
+    // public TStockPrices getById(Long id) {
+    // TStockPrices temp =
+    // this.stockPricesRepository.findByIdAndIsDeleteFalse(id).get(0);
+    // return temp;
+    // }
 }

@@ -117,8 +117,8 @@
                         <th>Persentase</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
+                <tbody id="dataId">
+                    <!-- <tr>
                         <td class="stock-symbol">AAPL</td>
                         <td>Apple Inc.</td>
                         <td>$145.30</td>
@@ -145,7 +145,7 @@
                         <td>$3,450.00</td>
                         <td class="negative">-8.00</td>
                         <td class="negative">-0.23%</td>
-                    </tr>
+                    </tr> -->
                 </tbody>
             </table>
 
@@ -157,3 +157,37 @@
 </body>
 
 </html>
+
+<script>
+    $(() => {
+        getAllData()
+    })
+    const getAllData = () => {
+        $.ajax({
+            url: "/api/watchlist",
+            type: "get",
+            contentType: "application/json",
+            success: (response) => {
+                console.log(response)
+                getAllWatchList(response)
+            }
+        })
+    }
+
+    const getAllWatchList = (response) => {
+        const getId = $("#dataId")
+        response.forEach(item => {
+
+            const newData = `
+                 <tr>
+                    <td class="stock-symbol">${item.name}</td>
+                    <td>${item.companyName}</td>
+                    <td>$145.30</td>
+                    <td class="positive">+1.25</td>
+                    <td class="positive">+0.87%</td>
+                </tr>
+            `
+            getId.append(newData)
+        });
+    }
+</script>

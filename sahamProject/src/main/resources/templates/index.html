@@ -56,20 +56,24 @@
 		/* Top Trending Stocks */
 		.stocks-grid {
 			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			/* Responsif */
 			gap: 15px;
+			padding: 10px;
 		}
 
 		.stock-card {
-			padding: 15px;
 			background: #f7f9fc;
 			border: 1px solid #ddd;
 			border-radius: 8px;
+			padding: 15px;
+			box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+			text-align: center;
 			transition: transform 0.3s;
 		}
 
 		.stock-card:hover {
-			transform: scale(1.02);
+			transform: scale(1.05);
 		}
 
 		.stock-symbol {
@@ -87,15 +91,15 @@
 		.stock-change {
 			font-size: 14px;
 			font-weight: bold;
-		}
-
-		.positive {
 			color: #28a745;
+			/* Warna hijau untuk kenaikan harga */
 		}
 
-		.negative {
+		.stock-change.negative {
 			color: #dc3545;
+			/* Warna merah untuk penurunan harga */
 		}
+
 
 		/* Portfolio Summary */
 		.portfolio-summary {
@@ -214,22 +218,8 @@
 			<!-- Top Trending Stocks -->
 			<div class="section">
 				<h2>Top Trending Saham</h2>
-				<div class="stocks-grid">
-					<div class="stock-card" id="bodyCard">
-						<!-- <div class="stock-symbol" id="code">AAPL</div>
-						<div class="stock-price" id="price">$145.30</div>
-						<div class="stock-change positive">+0.87%</div> -->
-					</div>
-					<!-- <div class="stock-card" id="">
-						<div class="stock-symbol" id="code">AAPL</div>
-						<div class="stock-price" id="price">$145.30</div>
-						<div class="stock-change positive">+0.87%</div>
-					</div>
-					<div class="stock-card" id="">
-						<div class="stock-symbol" id="code">AAPL</div>
-						<div class="stock-price" id="price">$145.30</div>
-						<div class="stock-change positive">+0.87%</div>
-					</div> -->
+				<div class="stocks-grid" id="bodyCard">
+
 				</div>
 			</div>
 
@@ -301,13 +291,49 @@
 			type: "get",
 			contentType: "application/json",
 			success: (response) => {
-				console.log(response)
+				// console.log(response)
 				stockPrices = response.stockPrices
 				console.log(stockPrices)
+				getTopSaham(response)
+
 			}
 		})
 	}
 	const getTopSaham = (response) => {
-
+		let stockPrices = response.stockPrices.slice(0, 5)
+		let getStockPricesList = $("#bodyCard")
+		stockPrices.forEach(item => {
+			const colorData = item.highPrice >= item.closePrice ? "positive" : "negative"
+			const newData = `
+				<div class="stock-card" id="${item.mcompany.id}">
+					<div class="stock-symbol" >${item.mcompany.name}</div>
+					<div class="stock-price" >Tertinggi: ${item.highPrice}</div>
+					<div class="stock-change ${colorData}">Penutup: ${item.closePrice}</div>
+				</div>
+			`
+			getStockPricesList.append(newData)
+		});
 	}
+	$(document).on("click", ".stock-card", function () {
+		let id = $(this).attr("id");
+		if (id) {
+			window.location.href = `http://localhost:8080/sahamdetail?id=${id}`;
+		}
+	});
+
+	// $(document).ready(() => {
+	// 	loadStocks();
+	// });
+
+	// const detailStock = (id) => {
+	// 	// let getCardId = $("#bodyCard").val()
+	// 	$.ajax({
+	// 		url: "/api/sahamdetail/" + id,
+	// 		type: 'get',
+	// 		contentType: "application/json",
+	// 		success: (response) => {
+	// 			console.log(response)
+	// 		}
+	// 	})
+	// }
 </script>
