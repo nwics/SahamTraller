@@ -34,14 +34,14 @@ public class ApiDashboardController {
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable("id") Long id) {
-        try {
-            MCompany mCompany = this.dashboardService.getById(id);
-            return new ResponseEntity<>(mCompany, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
-        }
-    }
+    // @GetMapping("/{id}")
+    // public ResponseEntity<?> getById(@PathVariable("id") Long id) {
+    // try {
+    // MCompany mCompany = this.dashboardService.getById(id);
+    // return new ResponseEntity<>(mCompany, HttpStatus.OK);
+    // } catch (Exception e) {
+    // return new ResponseEntity<>(e, HttpStatus.BAD_REQUEST);
+    // }
+    // }
 
 }

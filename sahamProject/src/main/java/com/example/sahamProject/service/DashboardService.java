@@ -27,10 +27,10 @@ public class DashboardService {
         return companyRepository.findAll();
     }
 
-    public MCompany getById(Long id) {
-        MCompany temp = this.companyRepository.findByIdAndIsDeleteFalse(id).get(0);
-        return temp;
-    }
+    // public MCompany getById(Long id) {
+    // MCompany temp = this.companyRepository.findByIdAndIsDeleteFalse(id).get(0);
+    // return temp;
+    // }
 
     // public TStockPrices getById(Long id) {
     // TStockPrices temp =
