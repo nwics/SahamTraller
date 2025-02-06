@@ -4,6 +4,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.security.core.userdetails.UserDetails;
+// import org.springframework.security.core.userdetails.User;
+// import org.springframework.security.core.userdetails.UserDetailsService;
+// import org.springframework.security.core.userdetails.UsernameNotFoundException;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.sahamProject.dao.AdminRepository;
@@ -18,6 +25,51 @@ import com.example.sahamProject.model.MUser;
 @Service
 public class UserService {
 
+    // private final UserRepository userRepository;
+    // private final PasswordEncoder passwordEncoder;
+
+    // public UserService(UserRepository userRepository, PasswordEncoder
+    // passwordEncoder) {
+    // this.userRepository = userRepository;
+    // this.passwordEncoder = passwordEncoder;
+    // }
+
+    // @Override
+    // public UserDetails loadUserByUsername(String email) throws
+    // UsernameNotFoundException {
+    // MUser user = userRepository.findByEmailAndIsDeleteFalse(email)
+    // .stream().findFirst()
+    // .orElseThrow(() -> new UsernameNotFoundException("User not found with email:
+    // " + email));
+
+    // return User.builder()
+    // .username(user.getEmail())
+    // .password(user.getPassword()) // Password sudah terenkripsi di database
+    // .roles(user.getMRole().getName()) // Menggunakan role dari database
+    // .build();
+    // }
+
+    // public MUser addNewUser(MUser user) {
+    // try {
+    // user.setPassword(passwordEncoder.encode(user.getPassword())); // Enkripsi
+    // password
+    // user.setCreatedOn(LocalDateTime.now());
+    // user = this.userRepository.save(user);
+
+    // user.setCreatedBy(user.getId());
+    // return this.userRepository.save(user);
+    // } catch (Exception e) {
+    // return new MUser();
+    // }
+    // }
+
+    // public String getValidasiEmail(String email) {
+    // boolean exists = userRepository.findByEmailAndIsDeleteFalse(email)
+    // .stream().findFirst()
+    // .isPresent();
+
+    // return exists ? "found" : "not found";
+    // }
     @Autowired
     private UserRepository userRepository;
 
@@ -29,6 +81,10 @@ public class UserService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    public List<MBiodata> getUsers() {
+        return biodataRepository.findAll();
+    }
 
     public String getValidasiEmail(String email) {
 
@@ -93,6 +149,7 @@ public class UserService {
         MBiodata teMBiodata = this.biodataRepository.save(tempMBiodata);
 
         tempMUser.setMRole(user.getMRole());
+        //
         // tempMUser.setRole(this.userRepository.findById(user.getMRole()).orElse(null));
         tempMUser.setMBiodataId(teMBiodata);
         tempMUser.setBiodataId(teMBiodata.getId());

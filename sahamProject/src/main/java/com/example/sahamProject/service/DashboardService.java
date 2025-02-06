@@ -7,7 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.example.sahamProject.dao.CompanyRepository;
 import com.example.sahamProject.dao.StockPricesRepository;
+import com.example.sahamProject.dao.UserRepository;
 import com.example.sahamProject.model.MCompany;
+import com.example.sahamProject.model.MUser;
 import com.example.sahamProject.model.TStockPrices;
 
 @Service
@@ -19,6 +21,9 @@ public class DashboardService {
     @Autowired
     private CompanyRepository companyRepository;
 
+    // @Autowired
+    // private UserRepository userRepository;
+
     public List<TStockPrices> getAllStockPrices() {
         return stockPricesRepository.findAll();
     }
@@ -26,6 +31,10 @@ public class DashboardService {
     public List<MCompany> getAllCompany() {
         return companyRepository.findAll();
     }
+
+    // public List<MUser> getAllUser() {
+    // return userRepository.findAll();
+    // }
 
     // public MCompany getById(Long id) {
     // MCompany temp = this.companyRepository.findByIdAndIsDeleteFalse(id).get(0);

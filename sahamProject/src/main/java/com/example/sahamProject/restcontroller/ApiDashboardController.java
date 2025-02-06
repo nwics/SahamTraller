@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.sahamProject.dto.DashboardResponseDTO;
+import com.example.sahamProject.model.MBiodata;
 import com.example.sahamProject.model.MCompany;
+import com.example.sahamProject.model.MUser;
 import com.example.sahamProject.model.TStockPrices;
 import com.example.sahamProject.service.DashboardService;
+import com.example.sahamProject.service.UserService;
 
 @RestController
 @RequestMapping("/api/dashboard")
@@ -22,15 +25,19 @@ public class ApiDashboardController {
     @Autowired
     private DashboardService dashboardService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/all")
     public ResponseEntity<DashboardResponseDTO> getAllData() {
         List<MCompany> companies = dashboardService.getAllCompany();
         List<TStockPrices> storkcPrices = dashboardService.getAllStockPrices();
+        List<MBiodata> users = userService.getUsers();
 
-        if (companies.isEmpty() && storkcPrices.isEmpty()) {
+        if (companies.isEmpty() && storkcPrices.isEmpty() && users.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        DashboardResponseDTO responseDTO = new DashboardResponseDTO(companies, storkcPrices);
+        DashboardResponseDTO responseDTO = new DashboardResponseDTO(companies, storkcPrices, users);
         return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 

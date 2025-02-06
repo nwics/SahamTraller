@@ -9,7 +9,17 @@ import java.util.Random;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
+// import io.jsonwebtoken.Claims;
+// import io.jsonwebtoken.Jwts;
+// import io.jsonwebtoken.SignatureAlgorithm;
+// import io.jsonwebtoken.io.Decoders;
+// import io.jsonwebtoken.security.Keys;
+// import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+// import org.springframework.security.core.Authentication;
+// import org.springframework.security.core.userdetails.User;
+// import org.springframework.stereotype.Service;
 
 import com.example.sahamProject.dao.TokenRepository;
 import com.example.sahamProject.dao.UserRepository;
@@ -17,6 +27,10 @@ import com.example.sahamProject.model.TToken;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+
+// import java.security.Key;
+// import java.util.Collections;
+// import java.util.Date;
 
 @Service
 public class TokenService {
@@ -29,6 +43,42 @@ public class TokenService {
 
     @Autowired
     private TokenRepository tokenRepository;
+
+    // private static final String SECRET_KEY = "your_secret_key_here"; // Ganti
+    // dengan key yang aman
+
+    // private Key getSigningKey() {
+    // byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
+    // return Keys.hmacShaKeyFor(keyBytes);
+    // }
+
+    // public Authentication parseToken(String token) {
+    // try {
+    // Claims claims = Jwts.parserBuilder()
+    // .setSigningKey(getSigningKey())
+    // .build()
+    // .parseClaimsJws(token)
+    // .getBody();
+
+    // String username = claims.getSubject();
+    // if (username == null) return null;
+
+    // return new UsernamePasswordAuthenticationToken(username, null,
+    // Collections.emptyList());
+    // } catch (Exception e) {
+    // return null; // Jika token tidak valid
+    // }
+    // }
+
+    // public String generateToken(String username) {
+    // return Jwts.builder()
+    // .setSubject(username)
+    // .setIssuedAt(new Date())
+    // .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // Token
+    // berlaku 1 hari
+    // .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+    // .compact();
+    // }
 
     public String sendOtpEmail(String email, String otp) throws MessagingException {
         MimeMessage message = mailSender.createMimeMessage();

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,10 +27,10 @@ public class ApiUserController {
     public ResponseEntity<?> findValidEmail(@RequestParam String email) {
         String response = this.userService.getValidasiEmail(email);
 
-        if (response == "found") {
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        if (response.equals("found")) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         } else {
-            return new ResponseEntity<>(response, HttpStatus.OK);
+            return ResponseEntity.ok(response);
         }
     }
 
@@ -60,12 +61,28 @@ public class ApiUserController {
 
     @PostMapping("/add/userdata")
     public ResponseEntity<?> addUser(@RequestBody MUser user) {
+        // MUser response = this.userService.addNewUser(user);
+
+        // if (response.getId() != null) {
+        // return ResponseEntity.ok(response);
+        // } else {
+        // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("fail");
+        // }
+
         String response = this.userService.addUserData(user);
         if (response == "success") {
             return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("fail", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/check-session")
+    public ResponseEntity<?> checkSession(@RequestHeader("Authorization") String token) {
+        if (token == null || token.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+        }
+        return ResponseEntity.ok("Session is valid");
     }
 
 }

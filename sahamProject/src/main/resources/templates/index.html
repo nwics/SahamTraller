@@ -4,6 +4,8 @@
 
 <head>
 	<title>Web Saham</title>
+	<!-- <script src="../static/jquery-3.7.1.min.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 	<style>
 		/* Global Styles */
 		body {
@@ -212,7 +214,7 @@
 			<!-- Header -->
 			<div class="header">
 				<h1>Dashboard Saham</h1>
-				<p class="welcome-message">Selamat datang, [Nama Pengguna]!</p>
+				<p class="welcome-message" id="nameUsers"></p>
 			</div>
 
 			<!-- Top Trending Stocks -->
@@ -293,12 +295,33 @@
 			success: (response) => {
 				// console.log(response)
 				stockPrices = response.stockPrices
-				console.log(stockPrices)
+
+				console.log(response.users[0].fullname)
+				console.log("index ke -2", stockPrices[1])
 				getTopSaham(response)
+				// let getName = $("#nameUsers")
+				// if (getName) {
+				// 	getName.textContent = `Selamat datang, ${response.users[0].fullname}!`
+				// }
+				getDataUsers(response)
+
 
 			}
 		})
 	}
+	const getDataUsers = (response) => {
+		let users
+		users = response.users[0]
+		let getName = $("#nameUsers")
+		const newName = `
+				<div class="header">
+					
+					<p class="welcome-message">Selamat datang, ${users.fullname}</p>
+				</div>
+				`
+		getName.append(newName)
+	}
+
 	const getTopSaham = (response) => {
 		let stockPrices = response.stockPrices.slice(0, 5)
 		let getStockPricesList = $("#bodyCard")
