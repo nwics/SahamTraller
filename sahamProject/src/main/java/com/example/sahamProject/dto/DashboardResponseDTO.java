@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.sahamProject.model.MBiodata;
 import com.example.sahamProject.model.MCompany;
+import com.example.sahamProject.model.MStockNews;
 import com.example.sahamProject.model.MUser;
 import com.example.sahamProject.model.TStockPrices;
 
@@ -20,5 +21,6 @@ public class DashboardResponseDTO {
     private List<MCompany> companies;
     private List<TStockPrices> stockPrices;
     private List<MBiodata> users;
+    private List<MStockNews> news;
 
 }

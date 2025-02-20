@@ -247,24 +247,9 @@
 			<!-- Market News -->
 			<div class="section">
 				<h2>Berita Terbaru</h2>
-				<div class="news-item">
-					<div class="news-image">
-						<img src="https://via.placeholder.com/100" alt="News Image">
-					</div>
-					<div class="news-content">
-						<a href="#" class="news-title-link">IHSG Ditutup Menguat di Tengah Sentimen Positif Global</a>
-						<div class="news-meta">Dipublikasikan: 10 menit yang lalu</div>
-					</div>
+				<div class="news-item" id="bodyNews">
 				</div>
-				<div class="news-item">
-					<div class="news-image">
-						<img src="https://via.placeholder.com/100" alt="News Image">
-					</div>
-					<div class="news-content">
-						<a href="#" class="news-title-link">Investor Optimis dengan Laporan Keuangan Perusahaan</a>
-						<div class="news-meta">Dipublikasikan: 1 jam yang lalu</div>
-					</div>
-				</div>
+
 			</div>
 
 			<div class="section">
@@ -295,7 +280,7 @@
 			success: (response) => {
 				// console.log(response)
 				stockPrices = response.stockPrices
-
+				console.log("news : ", response.news)
 				console.log(response.users[0].fullname)
 				console.log("index ke -2", stockPrices[1])
 				getTopSaham(response)
@@ -303,6 +288,7 @@
 				// if (getName) {
 				// 	getName.textContent = `Selamat datang, ${response.users[0].fullname}!`
 				// }
+				getNews(response)
 				getDataUsers(response)
 
 
@@ -320,6 +306,27 @@
 				</div>
 				`
 		getName.append(newName)
+	}
+	const getNews = (response) => {
+		let marketNews = response.news
+		let getMarketNews = $("#bodyNews")
+		marketNews.forEach(item => {
+			const newData =
+				`
+			 <li class="news-item">
+                    <div class="news-image">
+                        <img src="${item.imagePath || 'https://via.placeholder.com/100'}" alt="Market News">
+                    </div>
+                    <div class="news-content">
+                        <a href="${item.url}" class="news-title-link">${item.title}</a>
+                        <div class="news-meta">Dipublikasikan: ${item.createdOn}</div>
+                        <p class="news-summary">${item.content}</p>
+                    </div>
+                </li>
+			`
+			getMarketNews.append(newData)
+		})
+
 	}
 
 	const getTopSaham = (response) => {

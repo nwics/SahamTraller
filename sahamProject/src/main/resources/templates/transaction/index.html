@@ -133,9 +133,9 @@
                         <label for="stock-symbol">Simbol Saham</label>
                         <!-- <input type="text" id="stock-symbol" placeholder="Contoh: BBCA" required> -->
                         <select name="" id="stock-symbol">
-                            <option value="">BBCA</option>
+                            <!-- <option value="">BBCA</option>
                             <option value="">BBRI</option>
-                            <option value="">ADRO</option>
+                            <option value="">ADRO</option> -->
 
 
                         </select>
@@ -154,7 +154,7 @@
                     </div>
                     <div class="form-group">
                         <label for="price">Harga per Saham</label>
-                        <input type="number" id="price" placeholder="Masukkan harga saham" required>
+                        <input type="number" id="price" placeholder="Masukkan harga saham" disabled>
                     </div>
                     <div class="transaction-actions">
                         <button type="submit">Kirim Transaksi</button>
@@ -204,3 +204,46 @@
 </body>
 
 </html>
+
+<script>
+    $(() => {
+        getAllData()
+    })
+
+    const getAllData = () => {
+        $.ajax({
+            url: "/api/transaction",
+            type: "get",
+            contentType: "application/json",
+            success: (response) => {
+                console.log(response)
+                // response.map(item => console.log(item.mcompany))
+                getDataCompanyPrices(response)
+            }
+        })
+    }
+
+    const getDataCompanyPrices = (response) => {
+        let data = response
+        let getDataCompany = $("#stock-symbol")
+        let getDataPrices = $("#price")
+
+        data.forEach(item => {
+
+            const newData = `
+                <option value="${item.openPrice}">${item.mcompany.name}</option>
+              
+            
+            `
+            getDataCompany.append(newData)
+        });
+        getDataCompany.on("change", function () {
+            let selectedItem = $(this).val();
+            getDataPrices.val(selectedItem)
+        })
+
+
+    }
+
+
+</script>
