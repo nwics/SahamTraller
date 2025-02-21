@@ -157,7 +157,7 @@
                         <input type="number" id="price" placeholder="Masukkan harga saham" disabled>
                     </div>
                     <div class="transaction-actions">
-                        <button type="submit">Kirim Transaksi</button>
+                        <button onclick="getTransaction()">Kirim Transaksi</button>
                     </div>
                 </form>
             </div>
@@ -241,8 +241,33 @@
             let selectedItem = $(this).val();
             getDataPrices.val(selectedItem)
         })
+    }
 
+    const getTransaction = () => {
+        let tanggal
+        let simbol = $("#stock-symbol")
+        let jenis = $("#transaction-type")
+        let jumlahLot = $("#quantity")
+        let price = $("#price")
+        // let total = 
+        let formData = JSON.stringify({
+            "tanggal": tanggal,
+            "simbol": simbol,
+            "jenis": jenis,
+            "jumlahLot": jumlahLot,
+            "price": price
+        })
 
+        $.ajax({
+            url: "/api/transaction/add",
+            type: "post",
+            contentType: "application/json",
+            data: formData,
+            success: () => {
+                alert("Data berhasil masuk")
+            }
+
+        })
     }
 
 
